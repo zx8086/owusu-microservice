@@ -1,11 +1,15 @@
 // Require express and create an instance of it
-var express = require('express');
-var app = express();
+const express = require("express");
+const app = express();
+
+// const { countAllRequests } = require("./monitoring");
+// app.use(countAllRequests());
+
 const axios = require('axios');
 
 // on the request to root (localhost:3000/)
 app.get('/', function (req, res) {
-    res.send('<b>My</b> first express http server');
+    res.send('Welcome to the Owusu Micro-service');
 });
 
 app.get("/owusu", async (req, res) => {
@@ -37,6 +41,3 @@ app.use(function(req, res, next) {
 app.listen(3001, function () {
     console.log('Owusu Service is listening on port 3001.');
 });
-
-
-
