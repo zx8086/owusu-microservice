@@ -29,7 +29,11 @@
     "@opentelemetry/sdk-trace-node": "^1.2.0",
     "@opentelemetry/semantic-conventions": "^1.2.0",
     "axios": "^0.27.2",
+    "logger": "^0.0.1",
+    "morgan": "^1.10.0",
+    "morgan-json": "^1.1.0",
     "opentelemetry-instrumentation-kafkajs": "^0.27.1",
-    "opentelemetry-instrumentation-socket.io": "^0.27.1"
+    "opentelemetry-instrumentation-socket.io": "^0.27.1",
+    "winston": "^3.7.2"
   }
 }
