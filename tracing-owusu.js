@@ -27,7 +27,7 @@ const sdk = new opentelemetry.NodeSDK({
 
 const provider = new NodeTracerProvider({
   resource: new Resource({
-        [SemanticResourceAttributes.SERVICE_NAME]: "owusu-service",
+        [SemanticResourceAttributes.SERVICE_NAME]: "owusu-microservice",
         [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: "Production"
 
     }),
