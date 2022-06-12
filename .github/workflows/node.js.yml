@@ -86,6 +86,7 @@ jobs:
         MSG_MINIMAL: ref,actions url,commit,repo action url
   sonarcloud:
     name: SonarCloud-Scanning
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
