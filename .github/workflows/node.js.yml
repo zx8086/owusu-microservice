@@ -29,10 +29,9 @@ jobs:
       if: always()
       run: echo "SLACK_FOOTER=<$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID|Click here to go to the job logs>" >> $GITHUB_ENV
       env:
+        SLACK_MSG_AUTHOR: ' '
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-        SLACK_MESSAGE: 'Post Content :rocket:'
-        SLACK_TITLE: Post Title
         MSG_MINIMAL: Repo Actions URL, Actions URL,Commit
   sonarcloud:
     name: SonarCloud-Scanning
