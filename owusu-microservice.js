@@ -5,7 +5,6 @@ const app = express();
 const axios = require('axios');
 
 const logger = require('./logger')
-// const { configFromPath } = require('./util');
 const httpLogger = require('./httpLogger')
 
 app.use(httpLogger)
@@ -19,11 +18,29 @@ app.get('/', function (_req, res) {
 app.get("/owusu", async (_req, res) => {
     logger.debug('This is the "/owusu" route.')
     logger.info("Calling Esquire Micro-service...")
-    const result = await axios({
+    await axios({
       method: 'GET',
       url: 'http://192.168.0.9:3002/esquire'
     })
-    return res.status(200).send({ message: "Calling Esquire Micro-service..." });
+    .then(function (response) {
+      logger.info('Calling Esquire Service...')
+      res.statusCode = 200
+      res.setHeader('Content-Type', 'application/json')
+      res.end('Calling Esquire Service...')
+      console.log(response);
+    })
+    .catch(function (error) {
+      logger.error('Failed to call Esquire Service...')
+      logger.error('Application Error - ', error)
+      res.statusCode = 500
+      res.setHeader('Content-Type', 'application/json')
+      res.end('Failed to call Esquire Service...')
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+      logger.debug('This is the "/esquire" route.')
+    }); 
 });
 
 app.get("/go", async (_req, res) => {
@@ -51,19 +68,17 @@ app.get("/go", async (_req, res) => {
     })
     .then(function () {
       // always executed
-      logger.debug('This is the "/simon" route.')
+      logger.debug('This is the "/go" route.')
     }); 
     
 });
 
-// Change the 404 message modifing the middleware
 app.use(function(_req, res) {
     logger.debug('This is for erroneous route.')
     logger.info("Sorry, that route doesn't exist. Have a nice day :)")
     res.status(404).send("Sorry, that route doesn't exist. Have a nice day :)");
 });
 
-// start the server in the port 3001 !
 app.listen(3001, function () {
     console.log('Owusu Service is listening on port 3001.');
 });
