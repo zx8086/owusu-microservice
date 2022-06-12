@@ -12,7 +12,7 @@ on:
     branches: [ "master" ]
     types: [opened, synchronize, reopened]
 
-This allows a subsequently queued workflow run to interrupt previous runs
+# This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
@@ -42,7 +42,7 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-        MSG_MINIMAL: Repo Actions URL, Actions URL,Commit
+        # MSG_MINIMAL: Repo Actions URL, Actions URL,Commit
   sonarcloud:
     name: SonarCloud-Scanning
     runs-on: ubuntu-latest
@@ -65,8 +65,6 @@ jobs:
         test-group:
           [
             content,
-            graphql,
-            meta,
             routing,
             unit
           ]
