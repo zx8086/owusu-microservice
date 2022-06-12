@@ -18,25 +18,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
- runlint:
+  runlint:
     name: Codebase Linting
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+    - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: "master"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Lint Code Base
+      uses: github/super-linter@v4
+      env:
+        VALIDATE_ALL_CODEBASE: false
+        DEFAULT_BRANCH: "master"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   slackNotification:
     name: Slack Notification
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
       env:
