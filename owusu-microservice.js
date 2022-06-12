@@ -2,9 +2,6 @@
 const express = require("express");
 const app = express();
 
-// const { countAllRequests } = require("./monitoring");
-// app.use(countAllRequests());
-
 const axios = require('axios');
 
 const logger = require('./logger')
@@ -13,13 +10,13 @@ const httpLogger = require('./httpLogger')
 
 app.use(httpLogger)
 
-app.get('/', function (req_, res) {
+app.get('/', function (_req, res) {
     logger.debug('This is the "/" route.')
     logger.info("Welcome to the Owusu Micro-service")
     res.send('Welcome to the Owusu Micro-service');
 });
 
-app.get("/owusu", async (req_, res) => {
+app.get("/owusu", async (_req, res) => {
     logger.debug('This is the "/owusu" route.')
     logger.info("Calling Esquire Micro-service...")
     const result = await axios({
@@ -29,7 +26,7 @@ app.get("/owusu", async (req_, res) => {
     return res.status(200).send({ message: "Calling Esquire Micro-service..." });
 });
 
-app.get("/go", async (req_, res) => {
+app.get("/go", async (_req, res) => {
     logger.debug('This is the "/go" route.')
     logger.info("Calling Golang Service...")
 
@@ -60,7 +57,7 @@ app.get("/go", async (req_, res) => {
 });
 
 // Change the 404 message modifing the middleware
-app.use(function(req_, res) {
+app.use(function(_req, res) {
     logger.debug('This is for erroneous route.')
     logger.info("Sorry, that route doesn't exist. Have a nice day :)")
     res.status(404).send("Sorry, that route doesn't exist. Have a nice day :)");
