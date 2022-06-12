@@ -13,7 +13,6 @@ const httpLogger = require('./httpLogger')
 
 app.use(httpLogger)
 
-// on the request to root (localhost:3000/)
 app.get('/', function (req, res) {
     logger.debug('This is the "/" route.')
     logger.info("Welcome to the Owusu Micro-service")
@@ -34,11 +33,30 @@ app.get("/go", async (req, res) => {
     logger.debug('This is the "/go" route.')
     logger.info("Calling Golang Service...")
 
-    const result = await axios({
+    await axios({
       method: 'GET',
       url: 'http://192.168.0.9:4000/go'
     })
-    return res.status(200).send({ message: "Calling Golang Service..." });
+    .then(function (response) {
+      logger.info('Calling Golang Service...')
+      res.statusCode = 200
+      res.setHeader('Content-Type', 'application/json')
+      res.end('Calling Golang Service...')
+      console.log(response);
+    })
+    .catch(function (error) {
+      logger.error('Failed to call Golang Service...')
+      logger.error('Application Error - ', error)
+      res.statusCode = 500
+      res.setHeader('Content-Type', 'application/json')
+      res.end('Failed to call Golang Service...')
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+      logger.debug('This is the "/simon" route.')
+    }); 
+    
 });
 
 // Change the 404 message modifing the middleware
