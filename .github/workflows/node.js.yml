@@ -72,3 +72,14 @@ jobs:
           DIFF_FILE: get_diff_files.txt
           CHANGELOG_CACHE_FILE_PATH: tests/fixtures/changelog-feed.json
         run: npm test -- tests/${{ matrix.test-group }}/
+  slackNotification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+        MSG_MINIMAL: ref,actions url,commit,ref url
