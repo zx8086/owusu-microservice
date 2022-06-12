@@ -15,7 +15,7 @@ const requestCount = meter.createCounter("requests", {
 const boundInstruments = new Map();
 
 module.exports.countAllRequests = () => {
-  return (req, res, next) => {
+  return (_req, res, next) => {
     if (!boundInstruments.has(req.path)) {
       const labels = { route: req.path };
       const boundCounter = requestCount.bind(labels);
