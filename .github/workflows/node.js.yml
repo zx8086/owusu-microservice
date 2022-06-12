@@ -28,6 +28,8 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_MESSAGE: 'Post Content :rocket:'
+        SLACK_TITLE: Post Title
         MSG_MINIMAL: Repo Actions URL, Actions URL,Commit
   sonarcloud:
     name: SonarCloud-Scanning
