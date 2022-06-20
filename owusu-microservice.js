@@ -1,11 +1,35 @@
-// Require express and create an instance of it
+"use strict";
+
+const dotenv = require("dotenv");
+dotenv.config();
+
+// const instrument = require("@aspecto/opentelemetry");
+// const aspectoAuth = process.env.ASPECTO_API_KEY;
+
+const logger = require("./logger");
+
+// const { setLogger } = instrument({
+//   local: true,
+//   logger,
+//   aspectoAuth,
+//   serviceName: "simon-microservice",
+//   env: "Production",
+//   writeSystemLogs: true,
+//   // exportBatchSize: 100,
+//   samplingRatio: 1.0,
+//   disableAspecto: false,
+// });
+
+// setLogger(logger);
+
 const express = require("express");
 const app = express();
 
 const axios = require('axios');
 
-const logger = require('./logger')
 const httpLogger = require('./httpLogger')
+
+const PORT = process.env.PORT;
 
 app.use(httpLogger)
 
@@ -73,12 +97,14 @@ app.get("/go", async (_req, res) => {
     
 });
 
-app.use(function(_req, res) {
-    logger.debug('This is for erroneous route.')
-    logger.info("Sorry, that route doesn't exist. Have a nice day :)")
-    res.status(404).send("Sorry, that route doesn't exist. Have a nice day :)");
+app.listen(parseInt(PORT, 10), () => {
+  console.log(`Listening for requests on http://localhost:${PORT}`);
+  logger.info("Starting server.... Process initialized!");
 });
 
-app.listen(3001, function () {
-    console.log('Owusu Service is listening on port 3001.');
+process.on("SIGTERM", () => {
+  app.close(() => {
+    logger.info("Stopping server.... Process terminated!");
+    console.log("Process terminated");
+  });
 });
