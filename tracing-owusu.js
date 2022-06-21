@@ -60,11 +60,12 @@ provider.register();
 
 sdk.start()
   .then(() => console.log('Tracing initialized'))
-  .catch((error) => console.log('Error initializing tracing', error));
-
-process.on('SIGTERM', () => {
-  sdk.shutdown()
+    .catch((error) => console.log('Error initializing tracing', error));
+  
+  // gracefully shut down the SDK on process exit
+  process.on('SIGTERM', () => {
+    sdk.shutdown()
     .then(() => console.log('Tracing terminated'))
     .catch((error) => console.log('Error terminating tracing', error))
     .finally(() => process.exit(0));
-});
+    });
