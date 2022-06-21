@@ -14,6 +14,7 @@ const { OTLPMetricExporter } = require('@opentelemetry/exporter-metrics-otlp-htt
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
 
 const { getNodeAutoInstrumentations } = require("@opentelemetry/auto-instrumentations-node");
+const { ExpressInstrumentation } = require("opentelemetry-instrumentation-express");
 const { KafkaJsInstrumentation } = require('opentelemetry-instrumentation-kafkajs');
 const { RouterInstrumentation } = require('@opentelemetry/instrumentation-router');
 const { SocketIoInstrumentation } = require('opentelemetry-instrumentation-socket.io');
@@ -28,6 +29,14 @@ const sdk = new opentelemetry.NodeSDK({
   instrumentations: 
     [
       getNodeAutoInstrumentations(),
+      new ExpressInstrumentation({
+        requestHook: (span, requestInfo) => {
+          span.setAttribute(
+            "http.request.body",
+            JSON.stringify(requestInfo.req.body)
+          );
+        },
+      }),
       // new RouterInstrumentation(),
       // new SocketIoInstrumentation(),
       new KafkaJsInstrumentation() 
@@ -36,8 +45,8 @@ const sdk = new opentelemetry.NodeSDK({
 
 const provider = new NodeTracerProvider({
   resource: new Resource({
-        [SemanticResourceAttributes.SERVICE_NAME]: "owusu-microservice",
-        [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: "Production"
+      [SemanticResourceAttributes.SERVICE_NAME]: process.env.SERVICE_NAME,
+      [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: process.env.DEPLOYMENT_ENVIRONMENT
     }),
 });
 
@@ -48,8 +57,8 @@ const metricExporter = new OTLPMetricExporter({});
 
 const meterProvider = new MeterProvider({
   resource: new Resource({
-        [SemanticResourceAttributes.SERVICE_NAME]: "owusu-metrics-service",
-        [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: "Production",
+      [SemanticResourceAttributes.SERVICE_NAME]: process.env.SERVICE_NAME,
+      [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: process.env.DEPLOYMENT_ENVIRONMENT
   }),
 });
 

@@ -38,6 +38,7 @@
     "logger": "^0.0.1",
     "morgan": "^1.10.0",
     "morgan-json": "^1.1.0",
+    "opentelemetry-instrumentation-express": "^0.28.0",
     "opentelemetry-instrumentation-kafkajs": "^0.27.1",
     "opentelemetry-instrumentation-socket.io": "^0.27.1",
     "standard": "^17.0.0",
