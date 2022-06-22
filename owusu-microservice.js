@@ -91,7 +91,6 @@ app.get("/go", async (_req, res) => {
       console.log(error);
     })
     .then(function () {
-      // always executed
       logger.debug('This is the "/go" route.')
     }); 
     
