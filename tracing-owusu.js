@@ -1,7 +1,7 @@
 /* tracing-owusu.js */
 'use strict';
 
-const dotenv = require("dotenv");
+const dotenv = require('dotenv');
 dotenv.config();
 
 const opentelemetry = require("@opentelemetry/sdk-node");
@@ -11,24 +11,26 @@ const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventi
 
 const { BasicTracerProvider, ConsoleSpanExporter, SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base');
 const { NodeTracerProvider } = require("@opentelemetry/sdk-trace-node");
-const { MeterProvider, PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics-base');
+// const { MeterProvider, PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics-base');
 
-const { OTLPMetricExporter } = require('@opentelemetry/exporter-metrics-otlp-http');
+// const { OTLPMetricExporter } = require('@opentelemetry/exporter-metrics-otlp-http');
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
+// const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
+// const { OTLPTraceSpanExporter } = require('@opentelemetry/exporter-trace-otlp-http');
 
 const { getNodeAutoInstrumentations } = require("@opentelemetry/auto-instrumentations-node");
 const { ExpressInstrumentation } = require("opentelemetry-instrumentation-express");
 const { KafkaJsInstrumentation } = require('opentelemetry-instrumentation-kafkajs');
-const { RouterInstrumentation } = require('@opentelemetry/instrumentation-router');
-const { SocketIoInstrumentation } = require('opentelemetry-instrumentation-socket.io');
-const { registerInstrumentations } = require('@opentelemetry/instrumentation');
+// const { RouterInstrumentation } = require('@opentelemetry/instrumentation-router');
+// const { SocketIoInstrumentation } = require('opentelemetry-instrumentation-socket.io');
+// const { registerInstrumentations } = require('@opentelemetry/instrumentation');
 
 // const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api');
 // // For troubleshooting, set the log level to DiagLogLevel.DEBUG
 // diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
 
 const sdk = new opentelemetry.NodeSDK({
-  // traceExporter: new opentelemetry.tracing.ConsoleSpanExporter(),
+  traceExporter: new opentelemetry.tracing.ConsoleSpanExporter(),
   instrumentations: 
     [
       getNodeAutoInstrumentations(),
@@ -55,17 +57,15 @@ const provider = new NodeTracerProvider({
 
 const exporter = new OTLPTraceExporter();
 
-
-
 // --- Metrics Working Target Common
-const metricExporter = new OTLPMetricExporter({});
+// const metricExporter = new OTLPMetricExporter({});
 
-const meterProvider = new MeterProvider({
-  resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: process.env.SERVICE_NAME,
-      [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: process.env.DEPLOYMENT_ENVIRONMENT
-  }),
-});
+// const meterProvider = new MeterProvider({
+//   resource: new Resource({
+//       [SemanticResourceAttributes.SERVICE_NAME]: process.env.SERVICE_NAME,
+//       [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: process.env.DEPLOYMENT_ENVIRONMENT
+//   }),
+// });
 
 // Configure span processor to send spans to the exporter
 provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
