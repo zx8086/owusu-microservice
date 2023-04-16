@@ -47,7 +47,7 @@ app.get("/owusu", async (_req, res) => {
     logger.info("Calling Esquire Micro-service...")
     await axios({
       method: 'GET',
-      url: 'http://192.168.0.9:3002/esquire'
+      url: 'http://localhost:8072/esquire'
     })
     .then(function (response) {
       logger.info('Calling Esquire Service...')
