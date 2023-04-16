@@ -14,8 +14,8 @@ const { NodeTracerProvider } = require("@opentelemetry/sdk-trace-node");
 // const { MeterProvider, PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics-base');
 
 // const { OTLPMetricExporter } = require('@opentelemetry/exporter-metrics-otlp-http');
-const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
-// const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
+//const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
 // const { OTLPTraceSpanExporter } = require('@opentelemetry/exporter-trace-otlp-http');
 
 const { getNodeAutoInstrumentations } = require("@opentelemetry/auto-instrumentations-node");
