@@ -22,9 +22,6 @@ const logger = require("./logger");
 
 // setLogger(logger);
 
-
-
-
 const express = require("express");
 const app = express();
 
@@ -42,12 +39,12 @@ app.get('/', function (_req, res) {
     res.send('Welcome to the Owusu Micro-service');
 });
 
-app.get("/owusu", async (_req, res) => {
+app.get("/trace", async (_req, res) => {
     logger.debug('This is the "/owusu" route.')
     logger.info("Calling Esquire Micro-service...")
     await axios({
       method: 'GET',
-      url: 'http://localhost:8072/esquire'
+      url: 'http://localhost:8072/trace'
     })
     .then(function (response) {
       logger.info('Calling Esquire Service...')
@@ -115,4 +112,3 @@ process.on("SIGTERM", () => {
     console.log("Process terminated");
   });
 });
-
