@@ -40,11 +40,12 @@ app.get('/', function (_req, res) {
 });
 
 app.get("/trace", async (_req, res) => {
-    logger.debug('This is the "/owusu" route.')
+    logger.debug('This is the "/trace" route.')
     logger.info("Calling Esquire Micro-service...")
     await axios({
       method: 'GET',
-      url: 'http://localhost:8072/trace'
+      // url: 'http://localhost:8072/trace'
+      url: 'https://gateway.siobytes.com/esquire/trace' 
     })
     .then(function (response) {
       logger.info('Calling Esquire Service...')
@@ -64,35 +65,6 @@ app.get("/trace", async (_req, res) => {
     .then(function () {
       logger.debug('This is the "/esquire" route.')
     }); 
-});
-
-app.get("/go", async (_req, res) => {
-    logger.debug('This is the "/go" route.')
-    logger.info("Calling Golang Service...")
-
-    await axios({
-      method: 'GET',
-      url: 'http://192.168.0.9:4000/go'
-    })
-    .then(function (response) {
-      logger.info('Calling Golang Service...')
-      res.statusCode = 200
-      res.setHeader('Content-Type', 'application/json')
-      res.end('Calling Golang Service...')
-      console.log(response);
-    })
-    .catch(function (error) {
-      logger.error('Failed to call Golang Service...')
-      logger.error('Application Error - ', error)
-      res.statusCode = 500
-      res.setHeader('Content-Type', 'application/json')
-      res.end('Failed to call Golang Service...')
-      console.log(error);
-    })
-    .then(function () {
-      logger.debug('This is the "/go" route.')
-    }); 
-    
 });
 
 app.use(function(_req, res) {
