@@ -1,9 +1,11 @@
 "use strict";
 
-const dotenv = require("dotenv");
-dotenv.config();
+const dotenv = require("dotenv")
+dotenv.config()
 
-const logger = require("./logger");
+const PORT = process.env.PORT || 8071
+
+const logger = require("./logger")
 
 // const { setLogger } = instrument({
 //   local: true,
@@ -25,8 +27,6 @@ const app = express();
 const axios = require('axios');
 
 const httpLogger = require('./httpLogger')
-
-const PORT = process.env.PORT;
 
 app.use(httpLogger)
 
