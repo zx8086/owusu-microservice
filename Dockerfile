@@ -38,4 +38,3 @@ COPY . .
 CMD [ "node", "-r", "./tracing-otel.js", "owusu-microservice.js" ]
 
 EXPOSE 8071
-

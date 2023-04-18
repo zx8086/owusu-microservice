@@ -129,7 +129,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-node_modules
+./node_modules
 git-story_media
 
 .DS_Store
+node_modules
