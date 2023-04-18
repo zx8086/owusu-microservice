@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+.github
+.gitignore
+.xcode
+.trunk
+.git
+.vscode
+.DS_Store

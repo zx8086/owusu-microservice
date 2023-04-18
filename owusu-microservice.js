@@ -3,9 +3,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-// const instrument = require("@aspecto/opentelemetry");
-// const aspectoAuth = process.env.ASPECTO_API_KEY;
-
 const logger = require("./logger");
 
 // const { setLogger } = instrument({
@@ -44,7 +41,6 @@ app.get("/trace", async (_req, res) => {
     logger.info("Calling Esquire Micro-service...")
     await axios({
       method: 'GET',
-      // url: 'http://localhost:8072/trace'
       url: 'https://gateway.siobytes.com/esquire/trace' 
     })
     .then(function (response) {
@@ -63,7 +59,7 @@ app.get("/trace", async (_req, res) => {
       console.log(error);
     })
     .then(function () {
-      logger.debug('This is the "/esquire" route.')
+      logger.debug('This is the "/trace" route.')
     }); 
 });
 
@@ -71,16 +67,31 @@ app.use(function(_req, res) {
   logger.debug('This is for erroneous route.')
   logger.info("Sorry, that route doesn't exist. Have a nice day :)")
   res.status(404).send("Sorry, that route doesn't exist. Have a nice day :)");
-});
+})
 
-app.listen(parseInt(PORT, 10), () => {
-  console.log(`Listening for requests on http://localhost:${PORT}`);
-  logger.info("Starting server.... Process initialized!");
-});
+// app.listen(parseInt(PORT, 10), () => {
+//   console.log(`Listening for requests on http://localhost:${PORT}`);
+//   logger.info("Starting server.... Process initialized!");
+// });
+
+// process.on("SIGTERM", () => {
+//   app.close(() => {
+//     logger.info("Stopping server.... Process terminated!");
+//     console.log("Process terminated");
+//   });
+// });
+
+
+const server = app.listen(parseInt(PORT, 10), () =>
+  console.log(`Listening at port ${PORT}`),
+  logger.info("Starting server.... Process initialized!"),
+  console.log("Starting server.... Process initialized!")
+  )
+module.exports = server
 
 process.on("SIGTERM", () => {
-  app.close(() => {
-    logger.info("Stopping server.... Process terminated!");
-    console.log("Process terminated");
-  });
-});
+  server.close(() => {
+    logger.info("Stopping server.... Process terminated!")
+    console.log("Process terminated")
+  })
+})
