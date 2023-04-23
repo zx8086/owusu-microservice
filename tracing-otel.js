@@ -24,7 +24,6 @@ diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
 
 const traceExporter = new OTLPTraceExporter(
     {url: "https://grpc.siobytes.com",}
-    // {url: "http://192.168.0.9:4317/v1/traces",}
     )
 
 const sdk = new opentelemetry.NodeSDK({
