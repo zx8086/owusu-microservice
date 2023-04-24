@@ -10,20 +10,20 @@ const { ConsoleSpanExporter } = require('@opentelemetry/sdk-trace-base')
 const { Resource } = require('@opentelemetry/resources')
 const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions')
 
-// const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http')
-const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc')
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http')
+// const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc')
 const { KafkaJsInstrumentation } = require('opentelemetry-instrumentation-kafkajs')
 
 const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api')
 // For troubleshooting, set the log level to DiagLogLevel.DEBUG
-diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
+diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.INFO);
 
 // configure the SDK to export telemetry data to the console
 // enable all auto-instrumentations from the meta package
 // const consoleExporter = new ConsoleSpanExporter()
 
 const traceExporter = new OTLPTraceExporter(
-    {url: "https://grpc.siobytes.com",}
+    {url: "https://otel-http.siobytes.com",}
     )
 
 const sdk = new opentelemetry.NodeSDK({
